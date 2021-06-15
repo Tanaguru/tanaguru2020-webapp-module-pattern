@@ -1,0 +1,12 @@
+{
+  "name": "default-name",
+  "url": "http://localhost:8081",
+  "i18n": {
+    "en": "",
+    "fr": "",
+    "es": ""
+  },
+  "showOffline": true,
+  "showOnline": true,
+  "requiredAuthorities": []
+}
