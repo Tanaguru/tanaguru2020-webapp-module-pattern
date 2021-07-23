@@ -12,16 +12,34 @@ export default {
   mounted() {
     let message = {
       'name': 'on-module-mounted',
-      'height': document.getElementById('app').offsetHeight
     }
     window.top.postMessage(message, '*')
-
+    window.addEventListener('message', this.onMessage, false)
+    window.addEventListener('resize', this.onResize, false)
+    this.onResize();
   },
 
   methods: {
+    onMessage(e){
+      let message = e.data;
+      switch (message.name) {
+        case 'init-locale':
+          this.$i18n.locale = message.locale;
+          break;
+        case 'locale-change':
+          this.$i18n.locale = message.locale;
+          break;
+      }
+    },
     onReceivedSessionData(e) {
       let data = e.detail;
-      console.log(data)
+    },
+    onResize(){
+      let message = {
+        'name': 'on-resize',
+        'height': document.getElementById('app').offsetHeight
+      }
+      window.top.postMessage(message, '*')
     }
   }
 
@@ -30,5 +48,7 @@ export default {
 
 
 <style lang="scss">
-@import "~tanaguru-vue/src/scss/style";
+body {
+  overflow: hidden; /* Hide scrollbars */
+}
 </style>
